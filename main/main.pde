@@ -19,8 +19,7 @@ void draw(){
     for(final Circle circle : circles){
         circle(circle.getCenter().x, circle.getCenter().y, circle.getRadius());
     }
-  circle(mainPoint.x,mainPoint.y,signedDstToCircle(mainPoint,circles.get(0).getCenter(),60));
-
+  drawMainCircle(mainPoint, circles.get(0));
 
   findMouseDirectionLine();
   translate(mainPoint.x, mainPoint.y);
@@ -35,6 +34,9 @@ private void findMouseDirectionLine(){
   mouseDirection.mult(mouseDirectionLength);
 }
 
+private void drawMainCircle(final PVector center, final Circle nearestCircle){
+   circle(center.x,center.y,signedDstToCircle(mainPoint, nearestCircle.getCenter(), nearestCircle.getRadius()));
+}
 
 private void initCircles(){
  final Circle circle = new Circle(500f, 180f, 60f); 
