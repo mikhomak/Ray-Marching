@@ -1,6 +1,8 @@
 
 private final ArrayList<Circle> circles = new ArrayList();
-
+private final PVector mainPoint = new PVector(350,150);
+private final PVector mouseDirection = new PVector(0,0);
+private final float mouseDirectionLength = 800f;
 
 void setup() {
     size(800, 800);
@@ -10,19 +12,28 @@ void setup() {
 
 void draw(){  
     background(#5D5858);
-    stroke(#E3CCCC);
+    stroke(255);
     point(500, 500);
+    fill(214,199,199,150);
     
-    line(500, 500, mouseX * 100, mouseY * 100);
     for(final Circle circle : circles){
         circle(circle.getCenter().x, circle.getCenter().y, circle.getRadius());
     }
-  circle(500,500,signedDstToCircle(new PVector(500,500),circles.get(0).getCenter(),60));
-  stroke(#EA1313);
-  line(mouseX,mouseY,500,180);
-  
+  circle(mainPoint.x,mainPoint.y,signedDstToCircle(mainPoint,circles.get(0).getCenter(),60));
+
+
+  findMouseDirectionLine();
+  translate(mainPoint.x, mainPoint.y);
+  line(0,0, mouseDirection.x,mouseDirection.y);
 }
 
+
+private void findMouseDirectionLine(){
+  mouseDirection.x = mouseX - width/2;
+  mouseDirection.y = mouseY - height/2;
+  mouseDirection.normalize();
+  mouseDirection.mult(mouseDirectionLength);
+}
 
 
 private void initCircles(){
