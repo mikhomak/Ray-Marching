@@ -16,30 +16,59 @@ void draw(){
     point(500, 500);
     fill(214,199,199,150);
     
+  translate(mainPoint.x, mainPoint.y);
+  drawMainCircle(new PVector(0,0), circles.get(0));
+  
     for(final Circle circle : circles){
         circle(circle.getCenter().x, circle.getCenter().y, circle.getRadius());
     }
-  drawMainCircle(mainPoint, circles.get(0));
+  
+  
 
-  findMouseDirectionLine();
-  translate(mainPoint.x, mainPoint.y);
-  line(0,0, mouseDirection.x,mouseDirection.y);
+  stroke(255,0,0);
+  strokeWeight(5);
+  mouseDirection.x = mouseX - width/2;
+  mouseDirection.y = mouseY - height/2;
+  mouseDirection.normalize();
+  
+  //line(0,0,lol.x, lol.y);
+  stroke(0,0,0);
+  
+  strokeWeight(1);
+  
+  
+  
+    mouseDirection.x = mouseX - width/2;
+  mouseDirection.y = mouseY - height/2;
+  mouseDirection.normalize();
+  mouseDirection.mult(signedDstToCircle(new PVector(0,0), circles.get(0).getCenter(), circles.get(0).getRadius())/2);
+  drawMainCircle(new PVector(mouseDirection.x, mouseDirection.y), circles.get(0));
+    
+
+  
+
+  drawMainLine();  
 }
 
+private void drawMainLine(){
+  findMouseDirectionLine();
+  line(0,0, mouseDirection.x,mouseDirection.y);
+}
 
 private void findMouseDirectionLine(){
   mouseDirection.x = mouseX - width/2;
   mouseDirection.y = mouseY - height/2;
   mouseDirection.normalize();
-  mouseDirection.mult(mouseDirectionLength);
+  mouseDirection.mult(350/2);
 }
 
 private void drawMainCircle(final PVector center, final Circle nearestCircle){
-   circle(center.x,center.y,signedDstToCircle(mainPoint, nearestCircle.getCenter(), nearestCircle.getRadius()));
+  println(signedDstToCircle(center, nearestCircle.getCenter(), nearestCircle.getRadius()));
+   circle(center.x,center.y,signedDstToCircle(center, nearestCircle.getCenter(), nearestCircle.getRadius()));
 }
 
 private void initCircles(){
- final Circle circle = new Circle(500f, 180f, 60f); 
+ final Circle circle = new Circle(100, 180f, 60f); 
  circles.add(circle);
 }
 
