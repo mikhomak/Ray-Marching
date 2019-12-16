@@ -3,6 +3,7 @@ private final ArrayList<Circle> circles = new ArrayList();
 private final PVector mainPoint = new PVector(350,150);
 private final PVector mouseDirection = new PVector(0,0);
 private final float mouseDirectionLength = 800f;
+private final int maxCircles = 12;
 
 void setup() {
     size(800, 800);
@@ -59,7 +60,7 @@ private void findMouseDirectionLine(){
   mouseDirection.x = mouseX - width/2;
   mouseDirection.y = mouseY - height/2;
   mouseDirection.normalize();
-  mouseDirection.mult(350/2);
+  mouseDirection.mult(mouseDirectionLength);
 }
 
 private void drawMainCircle(final PVector center, final Circle nearestCircle){
