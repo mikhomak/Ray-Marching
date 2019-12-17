@@ -2,10 +2,9 @@ public class RayCircle extends Circle {
 
     private RayCircle next;
     public static final int MAX_AMOUNT = 6;
-    private PVector mouseDirection = new PVector(0,0);
-
+    private final PVector mouseDirection = new PVector(0,0);
     public RayCircle(final float x, final float y, final float radius,final int id) {
-        super(x, y, radius);        
+        super(x, y, radius);  
         if(id <= MAX_AMOUNT){
            next = new RayCircle(0,0,0,id+1); 
         }else{
@@ -13,16 +12,19 @@ public class RayCircle extends Circle {
         }
     }
 
-    public void updateCircle(final PVector newCenter,final ArrayList<Circle> circles){
+    public void updateCircle(final PVector newCenter,final ArrayList<Circle> circles, final PVector origin){
         this.center = newCenter;
         final Circle closestCircle = findClosestCircle(center, circles);
         drawRayCircle(closestCircle);
+        mouseDirection.x = mouseX - width / 2;
+        mouseDirection.y = mouseY - height / 2;
+        mouseDirection.normalize();
+        mouseDirection.mult(signedDstToCircle(center, closestCircle.getCenter(), closestCircle.getRadius())/2);
         if (getNext() != null) {
-            mouseDirection.x = mouseX - width / 2;
-            mouseDirection.y = mouseY - height / 2;
-            mouseDirection.normalize();
-            mouseDirection.mult(signedDstToCircle(center, closestCircle.getCenter(), closestCircle.getRadius())/2);
-            getNext().updateCircle(mouseDirection.add(center),circles);
+            getNext().updateCircle(mouseDirection.add(center),circles, origin);
+        }else{
+          stroke(255,0,0);
+           line(origin.x, origin.y, mouseDirection.x + center.x, mouseDirection.y + center.y); 
         }
     }
 
