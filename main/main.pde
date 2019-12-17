@@ -4,8 +4,9 @@ private final PVector mainPoint = new PVector(350,150);
 private final PVector mouseDirection = new PVector(0,0);
 private final float mouseDirectionLength = 800f;
 private final RayCircle mainCircle = new RayCircle(0,0,0,0);
-private Circle closestCircle = new Circle(0,0,0);
-
+private final float speed = 7f;
+private final PVector mainCirclePosition = new PVector(0,0);
+private final boolean keys[] = new boolean[128];
 void setup() {
     size(800, 800);
     background(#5D5858);
@@ -13,25 +14,22 @@ void setup() {
 }
 
 void draw(){  
-    background(#5D5858);
-    stroke(255);
-    point(500, 500);
-    fill(214,199,199,150);
-    
+  background(#5D5858);
+  stroke(255);
   translate(mainPoint.x, mainPoint.y);
-  
-  
-    for(final Circle circle : circles){
-        circle(circle.getCenter().x, circle.getCenter().y, circle.getRadius());
-    }
-  
-  mainCircle.updateCircle(new PVector(0,0), circles);
+  fill(167,90,90,150);
+  for(final Circle circle : circles){
+      circle(circle.getCenter().x, circle.getCenter().y, circle.getRadius());
+  }
+  fill(214,199,199,150);
+  move();
+  mainCircle.updateCircle(mainCirclePosition, circles);
   drawMainLine();  
 }
 
 private void drawMainLine(){
   findMouseDirectionLine();
-  line(0,0, mouseDirection.x,mouseDirection.y);
+    line(mainCirclePosition.x, mainCirclePosition.y, mouseDirection.x,mouseDirection.y);
 }
 
 private void findMouseDirectionLine(){
@@ -51,6 +49,30 @@ private void initCircles(){
  circles.add(circle1);
  circles.add(circle2);
  circles.add(circle3);
- circles.add(circle5);
  circles.add(circle4);
+  circles.add(circle5);
+}
+
+
+void move(){
+   if(keys['w']){
+     mainCirclePosition.y -= speed;
+   }
+   if(keys['s']){
+     mainCirclePosition.y += speed;
+   }
+   if(keys['a']){
+     mainCirclePosition.x -= speed;
+   }
+   if(keys['d']){
+     mainCirclePosition.x += speed;
+   }
+}
+
+void keyPressed(){
+    keys[key] = true;
+}
+
+void keyReleased(){
+   keys[key] = false; 
 }
