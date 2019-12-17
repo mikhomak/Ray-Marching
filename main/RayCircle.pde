@@ -3,9 +3,10 @@ public class RayCircle extends Circle {
     private RayCircle next;
     public static final int MAX_AMOUNT = 2;
     private PVector mouseDirection = new PVector(0,0);
-
+private int id;
     public RayCircle(final float x, final float y, final float radius,final int id) {
         super(x, y, radius);
+        this.id= id;
         if(id <= MAX_AMOUNT){
            next = new RayCircle(0,0,0,id+1); 
         }else{
@@ -14,14 +15,16 @@ public class RayCircle extends Circle {
     }
 
     public void updateCircle(final PVector newCenter, final Circle closestCircle) {
+        PVector oldCenter = this.center;
         this.center = newCenter;
         drawRayCircle(closestCircle);
         if (getNext() != null) {
+        
             mouseDirection.x = mouseX - width / 2;
             mouseDirection.y = mouseY - height / 2;
             mouseDirection.normalize();
-            mouseDirection.mult(signedDstToCircle(center, closestCircle.getCenter(), closestCircle.getRadius()) / 2);
-            getNext().updateCircle(mouseDirection ,closestCircle);
+            mouseDirection.mult(signedDstToCircle(center, closestCircle.getCenter(), closestCircle.getRadius())/2);
+            getNext().updateCircle(mouseDirection.add(center),closestCircle);
         }
     }
 
