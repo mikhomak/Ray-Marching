@@ -13,9 +13,21 @@ public class RayCircle extends Circle {
   
   public void updateCircle(final PVector newCenter, final Circle closestCircle){
     this.center = newCenter;
+    if(getNext() != null){
+       getNext().updateCircle();
+    }
+  }
+  
+  public void drawRayCircle(){
+    
   }
   
   
   public RayCircle getNext(){return next;}
   public void setNext(final RayCircle next){this.next = next;}
+  
+  
+  private float signedDstToCircle(final PVector previousCircle, final PVector closestPoint, final float radius){
+  return (PVector.dist(closestPoint, previousCircle) - radius/2)*2;
+}
 }
