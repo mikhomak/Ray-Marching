@@ -8,13 +8,13 @@ private final float MIN_RADIUS = 40;
 private final float MAX_RADIUS = 200;
 private final int MAX_CIRCLES = 12;
 void setup() {
-    size(800, 800);
+    size(1600, 800);
     background(#5D5858);
     initCircles();
 }
 
 void draw(){  
-  background(123, 152, 29);
+  background(51, 129, 68);
   stroke(255);
   fill(90,150,197,150);
   for(final Circle circle : circles){
