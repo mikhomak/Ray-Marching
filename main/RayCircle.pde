@@ -1,7 +1,7 @@
 public class RayCircle extends Circle {
 
     private RayCircle next;
-    public static final int MAX_AMOUNT = 6;
+    public static final int MAX_AMOUNT = 15;
     private final PVector mouseDirection = new PVector(0,0);
     public RayCircle(final float x, final float y, final float radius,final int id) {
         super(x, y, radius);  
