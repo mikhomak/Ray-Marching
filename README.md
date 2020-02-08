@@ -1,6 +1,7 @@
 ### Ray Marching
-Sphere trace ray marching
+Graphical representation of sphere trace ray marching
 ![](RayMarching.gif)
 
-When the radius of the RayCircle is too small that means there is collision  
+When the radius of the last circles are small enough that means they the line collides with something  
+
 You can move around using WASD  
